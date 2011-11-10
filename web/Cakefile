@@ -1,0 +1,9 @@
+fs      = require 'fs'
+{spawn} = require 'child_process'
+
+task 'build', 'build all CoffeeScript source files', (options) ->
+    files = fs.readdirSync 'lib'
+    files = ('lib/' + file for file in files when file.match(/\.coffee$/))
+    files.push 'app.coffee'
+    console.log(files)
+    spawn 'coffee', ['-c'].concat(files)
