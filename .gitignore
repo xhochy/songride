@@ -1,3 +1,6 @@
 /web/node_modules/
 /web/app.js
 /web/lib/*.js
+/db/mongo-store/mongod.lock
+/db/mongo-store/songride*
+/db/mongo-store/local*
