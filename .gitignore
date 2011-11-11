@@ -4,3 +4,4 @@
 /db/mongo-store/mongod.lock
 /db/mongo-store/songride*
 /db/mongo-store/local*
+/db/mongo-store/journal/
