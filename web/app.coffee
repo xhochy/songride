@@ -1,5 +1,6 @@
 express = require('express')
 routes  = require('./routes')
+register = require('./lib/register')
 
 app = module.exports = express.createServer()
 
@@ -17,7 +18,7 @@ app.configure 'development', ->
     showStack: true
 
 app.configure 'production', ->
-  app.use express.errorHandler()
+    app.use express.errorHandler()
 
 app.get '/', routes.index
 
@@ -27,6 +28,7 @@ app.get '/register', (req, res) ->
 
 app.post '/register', (req, res) ->
     if req.param('username')
+        register.registerUser(req.param('username'))
         res.render 'register-success.jade',
             title: 'Register'
     else
