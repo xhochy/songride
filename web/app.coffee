@@ -1,4 +1,5 @@
 express = require('express')
+trycatch = require('trycatch')
 routes  = require('./routes')
 register = require('./lib/register')
 
@@ -27,13 +28,19 @@ app.get '/register', (req, res) ->
         title: 'Register'
 
 app.post '/register', (req, res) ->
-    if req.param('username')
-        register.registerUser(req.param('username'))
-        res.render 'register-success.jade',
-            title: 'Register'
-    else
-        res.render 'register.jade',
-            title: 'Register'
+    tryFunc = ->
+        if req.param('username')
+            register.registerUser req.param('username'), ->
+                res.render 'register-success.jade',
+                    title: 'Register'
+        else
+            res.render 'register.jade',
+                title: 'Register'
+    catchFunc = (err) ->
+        res.render 'error.jade',
+            title: err.message
+            error: err
+    trycatch(tryFunc, catchFunc)
 
 app.listen(3000)
 console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
