@@ -1,9 +1,9 @@
-fs      = require 'fs'
-{spawn} = require 'child_process'
+muffin = require 'muffin'
 
-task 'build', 'build all CoffeeScript source files', (options) ->
-    files = fs.readdirSync 'lib'
-    files = ('lib/' + file for file in files when file.match(/\.coffee$/))
-    files.push 'app.coffee'
-    console.log(files)
-    spawn 'coffee', ['-c'].concat(files)
+task 'build', 'compile all CoffeeScript source files', (options) ->
+    muffin.run
+        files: './**/*.coffee'
+        options: options
+        map:
+            'app.coffee'      : (matches) -> muffin.compileScript('app.coffee', 'app.js', muffin.extend {notify: first}, options)
+            'lib/(.+).coffee' : (matches) -> muffin.compileScript(matches[0], matches[0].replace(/\.coffee$/, '.js'), muffin.extend {notify: first}, options)
