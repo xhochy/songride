@@ -14,9 +14,6 @@ require File.join(File.dirname(__FILE__), 'config')
 # Initialise the scobbler-ng library
 Scrobbler::Base.api_key = $config[:lastfm][:apikey]
 
-scanned_users = Set.new
-friends = Set.new
-
 class Fetcher
 
     def initialize(config)
