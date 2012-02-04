@@ -1,4 +1,4 @@
-Songride ist a application which generates per-user statistics from which
+Songride is a application which generates per-user statistics from which
 country the artists are coming from that were played.
 
 It is made up out of four components:
