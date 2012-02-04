@@ -25,7 +25,9 @@ main = do
     userCount <- mongo pipe (count (select [] userCollection))
     putStrLn ("Users:   " ++ (show (EitherUtils.fromRight userCount)))
     -- How many (different) tags are stored in the database?
-    putStrLn ("Tags:    " ++ "")
+    tagMR <- mongo pipe (runMR (mapReduce artistCollection tagMapFn tagReduceFn) {rOut = Output Replace "mr1out" Nothing})
+    tagCount <- mongo pipe (count (select [] "mr1out"))
+    putStrLn ("Tags:    " ++ show(EitherUtils.fromRight tagCount))
     putStrLn ""
     -- Create Statistics for all users who want them
     users <- mongo pipe (find wantedUsers {project = ["username" =: (1 :: Int), "_id" =: (0 :: Int)]} >>= rest)
@@ -33,3 +35,5 @@ main = do
     close pipe
     where wantedUsers =
             (select ["wants_statistics" =: True] userCollection)
+          tagMapFn = Javascript [] "function() {this.top_tags.forEach (function(z) {emit(z.name, z.count);});}"
+          tagReduceFn = Javascript [] "function (key, values) {var total = 0; for (var i = 0; i < values.length; i++) {total += values[i];} return total;}"
