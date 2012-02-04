@@ -1,7 +1,7 @@
 Songride is a application which generates per-user statistics from which
 country the artists are coming from that were played.
 
-It is made up out of four components:
+It made up of four components:
 
 1. NodeJS web interface written in CoffeeScript for user interaction
 2. Ruby worker to fetch and prepare the data used for statistics generation
