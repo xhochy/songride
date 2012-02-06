@@ -21,7 +21,7 @@ class Fetcher
         @scanned_users = Set.new
         @config = config
         @mongo = Mongo::Connection.new(@config[:mongo][:host], @config[:mongo][:port]).db(@config[:mongo][:database])
-        # @mongo.authenticate(@config[:mongo][:user], @config[:mongo][:password])
+        @mongo.authenticate(@config[:mongo][:user], @config[:mongo][:password])
         @cache = Scrobbler::Cache::Mongo.new(@mongo.collection(@config[:mongo][:cache_collection]))
         Scrobbler::Base.add_cache(@cache)
         @users = @mongo.collection(@config[:mongo][:user_collection])
