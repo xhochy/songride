@@ -43,7 +43,6 @@ class Fetcher
     end
 
     def handle_songride_user(user_entry)
-        puts user_entry
         user = Scrobbler::User.new(:name => user_entry['username'])
         # Add all friends to the fetching queue
         user.friends.each do |friend|
