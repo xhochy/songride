@@ -1,0 +1,12 @@
+Name:                songride-analyzer
+Version:             0.0
+Description:         Analyze from which countries artists may come depending on their tags
+License:             BSD3
+License-file:        LICENSE
+Author:              Uwe L. Korn
+Maintainer:          uwelk@xhochy.org
+Build-Type:          Simple
+Cabal-Version:       >=1.2
+Executable songride-analyzer
+  Main-is:           Analyzer.hs
+  Build-Depends:     base >= 3 && < 5, HsSyck >= 0.51, mongoDB, bson, MissingH
