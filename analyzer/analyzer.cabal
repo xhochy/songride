@@ -9,4 +9,4 @@ Build-Type:          Simple
 Cabal-Version:       >=1.2
 Executable songride-analyzer
   Main-is:           Analyzer.hs
-  Build-Depends:     base >= 3 && < 5, HsSyck >= 0.51, mongoDB, bson, MissingH
+  Build-Depends:     base >= 3 && < 5, HsSyck >= 0.51, mongoDB, bson, MissingH, directory, containers

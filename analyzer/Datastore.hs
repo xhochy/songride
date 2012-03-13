@@ -1,9 +1,12 @@
 module Datastore (
     connectMongo, disconnectMongo,
-    countCollectionEntries, reduceTags
+    countCollectionEntries, reduceTags, countRegisteredUsersDb,
+    registeredUsersDb, getArtistDb
     ) where 
 
-import Data.UString
+import Data.Either.Utils (fromRight)
+import Data.List (unfoldr)
+import Data.UString (u)
 import Database.MongoDB
 
 -- HelperFunctions
@@ -16,7 +19,18 @@ connectMongo host port database username password = do
 
 disconnectMongo = close
 
-countCollectionEntries pipe database collection = mongo pipe database (Database.MongoDB.count (select [] collection))
+countCollectionEntries pipe database collection =
+    mongo pipe database (count (select [] collection))
+countRegisteredUsersDb pipe database collection =
+    mongo pipe database (count wantedUsers)
+    where wantedUsers = (select [(u "wants_statistics") =: True] collection)
+
+registeredUsersDb pipe database collection =
+    mongo pipe database ((find wantedUsers) >>= rest)
+    where wantedUsers = (select [(u "wants_statistics") =: True] collection)
+
+getArtistDb pipe database collection name =
+    mongo pipe database (findOne (select [(u "name") =: name] collection))
 
 reduceTags pipe database fromColl toColl = mongo pipe database (runMR (mapReduce fromColl tagMapFn tagReduceFn) {rOut = Output Replace toColl Nothing})
     where tagMapFn = Javascript [] (u "function() {this.top_tags.forEach (function(z) {emit(z.name, z.count);});}")
