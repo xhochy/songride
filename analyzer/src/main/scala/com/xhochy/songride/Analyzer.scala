@@ -1,8 +1,7 @@
+package com.xhochy.songride
 
+import com.foursquare.rogue.Rogue._
 import com.mongodb.casbah.Imports._
-import com.xhochy.songride.RogueMongoConnection
-import com.xhochy.songride.StaticMapClassifier
-import com.xhochy.songride.User
 import java.util.Map
 import org.yaml.snakeyaml.Yaml
 import scala.collection.JavaConversions._
@@ -29,8 +28,7 @@ object Analyzer extends App {
   println("Artists:            %10d".format(artistsDB.count))
   // TODO: Tag statistics
   println("Users (all):        %10d".format(User.count))
-  // println("Users (registered): %10d".format(User.count(User.wantsStatistics -> true)))
-  println("Users (registered): %10d".format(usersDB.count(MongoDBObject("wants_statistics" -> true))))
+  println("Users (registered): %10d".format(User.where(_.wantsStatistics eqs true).count()))
 
   // Load static tag->country mappings
   val staticMapClassifier = new StaticMapClassifier("countries")
