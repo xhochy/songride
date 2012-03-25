@@ -5,3 +5,6 @@
 /db/mongo-store/songride*
 /db/mongo-store/local*
 /db/mongo-store/journal/
+/analyzer/target/
+/analyzer/project/project/
+/analyzer/project/target/
