@@ -1,13 +1,14 @@
 package com.xhochy.songride
 
 import net.liftweb.mongodb.record.{ MongoMetaRecord, MongoRecord, MongoId }
-// import net.liftweb.mongodb.record.field.BsonRecordListField
+import net.liftweb.mongodb.record.field.BsonRecordListField
 import net.liftweb.record.field.{ StringField, BooleanField }
 
 class User extends MongoRecord[User] with MongoId[User] {
   def meta = User
   object name extends StringField(this, 1024) { override def name = "username" }
   object wantsStatistics extends BooleanField(this) { override def name = "wants_statistics" }
+  object artists extends BsonRecordListField(this, SimpleArtist)
 }
 
 object User extends User with MongoMetaRecord[User] {
