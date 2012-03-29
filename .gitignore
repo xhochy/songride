@@ -8,3 +8,5 @@
 /analyzer/target/
 /analyzer/project/project/
 /analyzer/project/target/
+/fetcher/config.rb
+/config.yml
