@@ -25,7 +25,7 @@ object Analyzer extends App {
   val usersDB = mongoDB("users")
 
   // Print statistics
-  println("Artists:            %10d".format(artistsDB.count))
+  println("Artists:            %10d".format(Artist.count))
   // TODO: Tag statistics
   println("Users (all):        %10d".format(User.count))
   println("Users (registered): %10d".format(User.where(_.wantsStatistics eqs true).count()))
@@ -33,7 +33,9 @@ object Analyzer extends App {
   // Load static tag->country mappings
   val staticMapClassifier = new StaticMapClassifier("countries")
   // Iterate over all users
-  println(User.count)
+  User.where(_.wantsStatistics eqs true).foreach(record => {
+    println(record)
+  })
   sys.exit(0)
   usersDB.find(MongoDBObject("wants_statistics" -> true)).foreach(user =>
       user.getAs[BasicDBList]("artists").foreach(some => some.foreach(artist =>
