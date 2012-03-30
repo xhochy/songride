@@ -26,10 +26,7 @@ object Analyzer extends App {
   // Load static tag->country mappings
   val staticMapClassifier = new StaticMapClassifier("countries")
   // Iterate over all users
-  User.where(_.wantsStatistics eqs true).foreach(record => {
-    println(record)
-  })
-  sys.exit(0)
+  User.where(_.wantsStatistics eqs true).foreach(staticMapClassifier.updateUser)
 
   def failWithError(message: String) = {
     System.err.println(message)

@@ -6,7 +6,7 @@ import org.yaml.snakeyaml.Yaml
 // correctly via pattern matching.
 import java.util.Map
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.mutable.HashMap
 
 import scalax.file.{ Path, PathMatcher }
@@ -29,7 +29,7 @@ class StaticMapClassifier(directory: String) {
   val yaml = new Yaml()
   val reverseMap = loadMapFromFiles()
 
-  def loadMapFromFiles():Map[String,String] = {
+  def loadMapFromFiles():scala.collection.mutable.Map[String,String] = {
     val staticReverseMap = new HashMap[String, String]()
     // Get a list of all YAML files countaining a mapping
     Path(directory).children(IsFile).toList
@@ -61,8 +61,48 @@ class StaticMapClassifier(directory: String) {
       .filter(x => (!x._1.isEmpty) && (!x._2.isEmpty))
       // Get the values of the Options in the reverse map.
       // Insert sequentially as the HashMap is a single thread implementation
-      .seq.foreach(x => staticReverseMap += ((x._2.get.toString, x._1.get.toString)))
+      .seq.foreach(x =>
+        x._2.get.foreach(tag =>
+          staticReverseMap.+=((tag, x._1.get.toString))))
     return staticReverseMap
+  }
+
+  // Update the classification of all artists heard by this user and
+  // accumulate the country counts.
+  def updateUser(user: User) {
+    // TODO: Check if statistics need an update
+    val stats = user.artists.get.map(record => record.getDetailed() match {
+        case Some(artist) => (updateArtist(artist), record.count.get)
+        case None => ("Unknown", record.count.get)
+      })
+      // Aggregate playcounts for each country
+      .groupBy(_._1).map(x => (x._1, x._2.map(_._2).sum))
+    // Compute total number of plays
+    // TODO: ^
+    // Map playcounts to percentages
+    // TODO: ^
+    println(stats)
+    // TODO: Save to the database
+    sys.exit(0)
+  }
+
+  // Check if the classification of an artist should be updated and return the
+  // latest classification result.
+  def updateArtist(artist: Artist):String = {
+    // TODO: Check if there is already a classification available
+    // Determine the scores of possible countries
+    val maximumLikely = artist.top_tags.get
+      .map(tag => (reverseMap.get(tag.name.get), tag.count.get))
+      // Strip all tags that do not resolve to a country
+      .filter(!_._1.isEmpty).map(x => (x._1.get, x._2))
+      // Aggregate scores for each country
+      .groupBy(_._1).map(x => (x._1, x._2.map(_._2).sum))
+      // Add an Unknown entry so that we always have a entry in the list
+      .+(("Unknown", 0L))
+      // Get the country with the highest
+      .maxBy(_._2)
+    // TODO: Save classification in the database
+    return maximumLikely._1
   }
 }
 
