@@ -78,11 +78,11 @@ class StaticMapClassifier(directory: String) {
       // Aggregate playcounts for each country
       .groupBy(_._1).map(x => (x._1, x._2.map(_._2).sum))
     // Compute total number of plays
-    // TODO: ^
+    val playcount = stats.foldLeft(0L)((r, x) => x._2 + r)
     // Map playcounts to percentages
-    // TODO: ^
-    println(stats)
+    val relativeStats = stats.mapValues[Double](_*1.0D / playcount)
     // TODO: Save to the database
+    println(relativeStats)
     sys.exit(0)
   }
 
