@@ -5,5 +5,5 @@ task 'build', 'compile all CoffeeScript source files', (options) ->
         files: './**/*.coffee'
         options: options
         map:
-            'app.coffee'      : (matches) -> muffin.compileScript('app.coffee', 'app.js', muffin.extend {notify: first}, options)
-            'lib/(.+).coffee' : (matches) -> muffin.compileScript(matches[0], matches[0].replace(/\.coffee$/, '.js'), muffin.extend {notify: first}, options)
+            'app.coffee'      : (matches) -> muffin.compileScript('app.coffee', 'app.js', options)
+            'lib/(.+).coffee' : (matches) -> muffin.compileScript(matches[0], matches[0].replace(/\.coffee$/, '.js'), options)
