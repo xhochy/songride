@@ -26,7 +26,7 @@ libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.6.4"
 
 libraryDependencies += "ru.circumflex" % "circumflex-docco" % "2.1"
 
-libraryDependencies += "com.foursquare" %% "rogue" % "1.1.6"
+libraryDependencies += "com.foursquare" %% "rogue" % "1.1.8"
 
 scalacOptions += "-deprecation"
 
