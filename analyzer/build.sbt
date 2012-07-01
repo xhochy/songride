@@ -16,9 +16,9 @@ resolvers += "Scala-Tools Maven2 Releases Repository" at "http://scala-tools.org
 
 libraryDependencies += "org.yaml" % "snakeyaml" % "1.10"
 
-libraryDependencies += "com.github.scala-incubator.io" %% "scala-io-core" % "0.3.0"
+libraryDependencies += "com.github.scala-incubator.io" %% "scala-io-core" % "0.4.0"
 
-libraryDependencies += "com.github.scala-incubator.io" %% "scala-io-file" % "0.3.0"
+libraryDependencies += "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.0"
 
 libraryDependencies += "com.mongodb.casbah" % "casbah_2.9.0-1" % "2.1.5.0"
 
