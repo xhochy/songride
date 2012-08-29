@@ -16,7 +16,7 @@ mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
         case "META-INF/LICENSE" => MergeStrategy.concat
         case "META-INF/LICENSE.txt" => MergeStrategy.concat
         case "META-INF/LICENSES.txt" => MergeStrategy.concat
-            case x => old(x)
+        case x => old(x)
     }
 }
 
@@ -40,7 +40,7 @@ libraryDependencies += "com.github.scala-incubator.io" %% "scala-io-core" % "0.4
 
 libraryDependencies += "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.0"
 
-libraryDependencies += "com.mongodb.casbah" % "casbah_2.9.0-1" % "2.1.5.0"
+libraryDependencies += "org.mongodb" % "casbah_2.9.1" % "2.4.1"
 
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.6.4"
 
