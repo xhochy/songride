@@ -34,7 +34,7 @@ object Analyzer extends App {
   }
 
   def loadConfig(filename: String):Option[Map[_,_]] = {
-    val configFile = Resource.fromFile(filename).slurpString(Codec.UTF8)
+    val configFile = Resource.fromFile(filename).string(Codec.UTF8)
     yaml.load(configFile) match {
       case map:Map[_, _] => Some(map)
       case _ => None

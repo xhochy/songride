@@ -4,7 +4,7 @@ import org.yaml.snakeyaml.Yaml
 
 // Add Java Map Interface so that the YAML input files could be casted 
 // correctly via pattern matching.
-import java.util.Map
+import java.util.{Date, Map}
 
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.mutable.HashMap
@@ -29,12 +29,14 @@ class StaticMapClassifier(directory: String) {
   val yaml = new Yaml()
   val reverseMap = loadMapFromFiles()
 
+  val UPDATE_FREQUENCY = 1000*60*60*24*7 // Update every 7 days
+
   def loadMapFromFiles():scala.collection.mutable.Map[String,String] = {
     val staticReverseMap = new HashMap[String, String]()
     // Get a list of all YAML files countaining a mapping
     Path(directory).children(IsFile).toList
       // Load the mappings into memory
-      .map(f => yaml.load(f.slurpString(Codec.UTF8)))
+      .map(f => yaml.load(f.string(Codec.UTF8)))
       // Cast all parsed files to Map[_,_]
       .map[Option[Map[_,_]], List[Option[Map[_,_]]]](_ match {
           case map:Map[_,_] => Some[Map[_,_]](map)
@@ -70,7 +72,11 @@ class StaticMapClassifier(directory: String) {
   // Update the classification of all artists heard by this user and
   // accumulate the country counts.
   def updateUser(user: User) {
-    // TODO: Check if statistics need an update
+    // Check if statistics need an update
+    val len = user.staticMapClassification.get.countries.get.length
+    val time = user.staticMapClassification.get.updated_at.get.getTime
+    if ((new Date).getTime - UPDATE_FREQUENCY < time && len > 0) return
+    // Statistics need to be updated
     val stats = user.artists.get.map(record => record.getDetailed() match {
         case Some(artist) => (updateArtist(artist), record.count.get)
         case None => ("Unknown", record.count.get)
@@ -81,9 +87,12 @@ class StaticMapClassifier(directory: String) {
     val playcount = stats.foldLeft(0L)((r, x) => x._2 + r)
     // Map playcounts to percentages
     val relativeStats = stats.mapValues[Double](_*1.0D / playcount)
-    // TODO: Save to the database
-    println(relativeStats)
-    sys.exit(0)
+    // Save to the database
+    user.staticMapClassification(StaticMapUserStats.createRecord.updated_at(new Date)
+      .countries(relativeStats.toList.map(x => {
+        CountryStatistics.createRecord.name(x._1).percentage(x._2)
+      })))
+    user.save
   }
 
   // Check if the classification of an artist should be updated and return the
