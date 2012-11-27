@@ -3,7 +3,7 @@
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
-      "express": ">= 2.5.0"
+      "express": "3.x"
     , "jade": ">= 0.0.1"
     , "mongodb": ">= 0.0.1"
     , "trycatch": ">= 0.0.1"

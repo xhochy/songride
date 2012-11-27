@@ -1,7 +1,7 @@
 mongo = require 'mongodb'
 
 server = new mongo.Server "127.0.0.1", 27117, {}
-client = new mongo.Db "songride", server
+client = new mongo.Db "songride", server, w:'majority', journal:true
 
 exports.registerUser = (username, success) ->
     client.open (err, database) ->

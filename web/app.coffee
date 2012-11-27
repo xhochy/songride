@@ -3,7 +3,7 @@ trycatch = require('trycatch')
 routes  = require('./routes')
 register = require('./lib/register')
 
-app = module.exports = express.createServer()
+app = express()
 
 app.configure ->
   app.set 'views', __dirname + '/views'
@@ -43,4 +43,3 @@ app.post '/register', (req, res) ->
     trycatch(tryFunc, catchFunc)
 
 app.listen(3000)
-console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
