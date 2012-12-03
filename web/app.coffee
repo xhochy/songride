@@ -28,18 +28,12 @@ app.get '/register', (req, res) ->
         title: 'Register'
 
 app.post '/register', (req, res) ->
-    tryFunc = ->
-        if req.param('username')
-            register.registerUser req.param('username'), ->
-                res.render 'register-success.jade',
-                    title: 'Register'
-        else
-            res.render 'register.jade',
+    if req.param('username')
+        register.registerUser req.param('username'), ->
+            res.render 'register-success.jade',
                 title: 'Register'
-    catchFunc = (err) ->
-        res.render 'error.jade',
-            title: err.message
-            error: err
-    trycatch(tryFunc, catchFunc)
+    else
+        res.render 'register.jade',
+            title: 'Register'
 
 app.listen(3000)

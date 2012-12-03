@@ -4,9 +4,8 @@
   , "private": true
   , "dependencies": {
       "express": "3.x"
-    , "jade": ">= 0.0.1"
+    , "jade": "0.27.x"
     , "mongodb": ">= 0.0.1"
-    , "trycatch": ">= 0.0.1"
     , "muffin": ">= 0.4.0"
   }
 }
