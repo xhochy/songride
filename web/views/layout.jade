@@ -1,21 +1,19 @@
 doctype 5
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/bootstrap/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    head
+        title= title
+        link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
   body
-      .topbar
-          .fill
+      .navbar.navbar-fixed-top.navbar-inverse
+          .navbar-inner
               .container
                   a.brand(href='#') Songride
-          ul.nav
-              li
-                  a(href='/') Home
-            li
-                a(href='/register') Register
-            li
-                a(href='/view') View Statistics
+                  ul.nav
+                      li
+                          a(href='/') About
+                      li
+                          a(href='/stats') Statistics
     .container
         .content
             block content
