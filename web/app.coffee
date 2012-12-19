@@ -1,7 +1,6 @@
 express = require('express')
 trycatch = require('trycatch')
 routes  = require('./routes')
-register = require('./lib/register')
 
 app = express()
 
@@ -23,17 +22,8 @@ app.configure 'production', ->
 
 app.get '/', routes.index
 
-app.get '/register', (req, res) ->
-    res.render 'register.jade',
-        title: 'Register'
-
-app.post '/register', (req, res) ->
-    if req.param('username')
-        register.registerUser req.param('username'), ->
-            res.render 'register-success.jade',
-                title: 'Register'
-    else
-        res.render 'register.jade',
-            title: 'Register'
+app.get '/stats', (req, res) ->
+    res.render 'stats-form.jade',
+        title: 'Statistics'
 
 app.listen(3000)

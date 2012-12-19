@@ -1,11 +1,10 @@
 {
-  "name": "application-name",
+  "name": "songride",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
     "express": "3.x",
     "jade": "0.27.x",
-    "mongodb": ">= 0.0.1",
     "muffin": ">= 0.4.0",
     "markdown": "~0.4.0"
   }

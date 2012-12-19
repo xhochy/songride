@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    .page-header
+        h1= title
+    h2 Last.fm
+    form.form-horizontal
+        .control-group
+            label.control-label(for="lastfmusername") User
+            .controls
+                .input-append
+                    input#lastfmusername(type="text",placeholder="username")
+                    button.btn(type="button") Get Statistics
+
