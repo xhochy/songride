@@ -45,7 +45,9 @@ async.waterfall [
                     if result.length > 0
                         # TODO: Cache should be refreshed after some time
                         splits = result[0].location.split(',')
-                        location = splits[splits.length - 1]
+                        location = splits[splits.length - 1].trim()
+                        if config.songride.corrections[location]?
+                            location = config.songride.corrections[location]
                         icb null, [location, parseInt(result[0].playcount)]
                     else
                         # Nothing cached so we need to ask the echonest.
@@ -72,7 +74,9 @@ async.waterfall [
                                 # the same thing.
                                 # TODO: If we are updating, use update
                                 splits = doc.location.split(',')
-                                location = splits[splits.length - 1]
+                                location = splits[splits.length - 1].trim()
+                                if config.songride.corrections[location]?
+                                    location = config.songride.corrections[location]
                                 artist_collection.insert doc, journal: true, (err, result) ->
                                     icb err, [location, doc.playcount]
 
