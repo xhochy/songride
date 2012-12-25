@@ -1,4 +1,7 @@
+async  = require 'async'
+{exec} = require 'child_process'
 muffin = require 'muffin'
+util   = require 'util'
 
 task 'build', 'compile all CoffeeScript source files', (options) ->
     muffin.run
@@ -7,3 +10,34 @@ task 'build', 'compile all CoffeeScript source files', (options) ->
         map:
             'app.coffee'      : (matches) -> muffin.compileScript('app.coffee', 'app.js', options)
             'lib/(.+).coffee' : (matches) -> muffin.compileScript(matches[0], matches[0].replace(/\.coffee$/, '.js'), options)
+
+task 'update', 'install and update all dependencies', ->
+    async.waterfall [
+        (cb) ->
+            util.log 'Installing new npm components'
+            exec 'npm install', (err, stdout, stderr) ->
+                cb err, stderr
+        (_, cb) ->
+            util.log 'Updating npm components'
+            exec 'npm update', (err, stdout, stderr) ->
+                cb err, stderr
+        (_, cb) ->
+            util.log 'Updating bower components'
+            exec 'bower update', (err, stdout, stderr) ->
+                cb err, stderr
+        (_, cb) ->
+            util.log 'Installing bootstrap dependencies'
+            exec 'npm install', cwd: 'components/boostrap', (err, stdout, stderr) ->
+                cb err, stderr
+        (_, cb) ->
+            util.log 'Updating bootstrap dependencies'
+            exec 'npm update', cwd: 'components/boostrap', (err, stdout, stderr) ->
+                cb err, stderr
+        (_, cb) ->
+            util.log 'Building bootstrap'
+            exec 'make bootstrap', cwd: 'components/boostrap', (err, stdout, stderr) ->
+                cb err, stderr
+    ], (err, result) ->
+        if err?
+            util.log err
+            util.log result
