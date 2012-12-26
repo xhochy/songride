@@ -1,1 +1,1 @@
-../components/g.raphael-min/index.0
+../components/g.raphael-min/index.js

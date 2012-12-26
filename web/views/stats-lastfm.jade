@@ -4,8 +4,6 @@ block content
     .page-header
         h1= title
         script(type='text/javascript')
-            var data = !{JSON.stringify(countries)};
-            $(document).ready(function() {
-                drawLastFMPie(data);
-            });
-        div#raphael
+            window.statsdata = !{JSON.stringify(countries)};
+        div#raphael-pie
+        div#raphael-world

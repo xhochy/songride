@@ -1,1 +1,1 @@
-../components/g.pie-min/index.0
+../components/g.pie-min/index.js
