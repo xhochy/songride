@@ -61,7 +61,7 @@ async.waterfall [
                                 doc.mbid = item.mbid
                                 doc.name = item.name
                                 doc.updated_at = parseInt(new Date().getTime() / 1000)
-                                if res.status.code == 0 and res.artist? and res.artist.artist_location?
+                                if res.status.code == 0 and res.artist? and res.artist.artist_location? and res.artist.artist_location.location?
                                     doc.location = res.artist.artist_location.location
                                 else
                                     doc.location = 'Unknown'
@@ -89,6 +89,7 @@ async.waterfall [
                 (cb) ->
                     # Get the users top50 artists
                     # TODO: Cache result
+                    console.log("# lastfm-top50 for " + job.data.username)
                     lastfm.request 'user.getTopArtists',
                         user: job.data.username
                         period: 'overall'
@@ -114,6 +115,7 @@ async.waterfall [
                     user_collection.insert doc, journal: true, cb
             ], (err, result) ->
                 job.progress(100, 100)
+                console.log("# FINISHED: lastfm-top50 for " + job.data.username)
                 if err?
                     done(err)
                 else
