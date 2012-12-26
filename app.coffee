@@ -51,13 +51,14 @@ app.get '/stats', (req, res) ->
         title: 'Statistics'
 
 app.get '/lastfm/:user', (req, res) ->
+    username = req.params.user.toLowerCase()
     async.waterfall [
         (cb) ->
             mongo.db.open cb
         (db, cb) ->
             db.collection 'users', cb
         (collection, cb) ->
-            collection.find(username: req.params.user).toArray cb
+            collection.find(username: username).toArray cb
         (user, cb) ->
             if user.length > 0
                 # TODO: update user stats after X days 
@@ -65,7 +66,7 @@ app.get '/lastfm/:user', (req, res) ->
             else
                 jobs.create('lastfm-top50',
                     title: 'Calculate TOP 50 Last.fm statistics for ' + req.params.user
-                    username: req.params.user
+                    username: username
                 ).save()
                 cb null, queued: true, user: null
     ], (err, result) ->
