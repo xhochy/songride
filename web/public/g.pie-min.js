@@ -1,0 +1,1 @@
+../components/g.pie-min/index.0

@@ -5,7 +5,9 @@
   "dependencies": {
     "jquery": "~1.8.1",
     "bootstrap": "~2.2.1",
-    "d3": "~3.0.0",
-    "underscore": "~1.4.3"
+    "underscore": "~1.4.3",
+    "raphael": "~2.1.0",
+    "g.raphael-min": "https://raw.github.com/DmitryBaranovskiy/g.raphael/master/min/g.raphael-min.js",
+    "g.pie-min": "https://raw.github.com/DmitryBaranovskiy/g.raphael/master/min/g.pie-min.js"
   }
 }

@@ -6,19 +6,25 @@ $(document).ready(function() {
 });
 
 function drawLastFMPie(obj) {
-    var width = 350;
-    var height = 350;
-    var radius = Math.min(width, height) / 2;
-    var arc = d3.svg.arc().outerRadius(radius - 10).innerRadius(0);
-    var pie = d3.layout.pie().sort(null).value(function(d) { return d.count });
-    var data = $.map(obj, function (value, key) { return {"country": key, "count": value}; });
-    var sum = _.reduce(data, function(memo, x) { return memo+x.count; }, 0);
-    console.log(sum);
-    var max = _.reduce(data, function(memo, x) { return Math.max(memo, x.count); }, 0);
-    var svg = d3.select("#graphs").append("svg").attr("width", width).attr("height", height).append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-    var g = svg.selectAll(".arc").data(pie(data)).enter().append("g").attr("class", "arc");
-    g.append("path").attr("d", arc).style("fill", function(d) { return d3.rgb(128 + 127*d.data.count/sum*(sum/max), 215, 50) });
-    g.append("text").attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-      .attr("dy", ".35em").style("text-anchor", "middle").text(function(d) { return d.data.country; });
+    var xs = _.map(obj, function(value, key, list) { return value; });
+    var legend_ys = _.map(obj, function(value, key, list) { return "%%.%% " + key; });
+    var r = Raphael("raphael", 400, 350);
+    var pie = r.piechart(175, 175, 100, xs, {
+        legend: legend_ys
+    });
+    pie.hover(function() {
+        this.sector.stop();
+        this.sector.scale(1.1, 1.1, this.cx, this.cy);
+        if (this.label) {
+            this.label[0].stop();
+            this.label[0].attr({ r: 7.5 });
+            this.label[1].attr({ "font-weight": 800 });
+        }
+    }, function() {
+        this.sector.animate({ transform: 's1 1 ' + this.cx + ' ' + this.cy }, 500, "bounce");
+        if (this.label) {
+            this.label[0].animate({ r: 5 }, 500, "bounce");
+            this.label[1].attr({ "font-weight": 400 });
+        }
+    });
 }
