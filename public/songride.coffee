@@ -37,7 +37,6 @@ window.drawLastFMMap = (obj) ->
         fill = "#f0efeb"
         if obj[key]?
             fill = Raphael.hsb((1 - (obj[key] / sum) / (max / sum)) / 4, .75, 1)
-            console.log(fill)
         r.path(value).attr({stroke: "#ccc6ae", fill: fill, "stroke-opacity": 0.25})
     world = r.setFinish()
 
