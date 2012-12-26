@@ -27,17 +27,18 @@ task 'update', 'install and update all dependencies', ->
                 cb err, stderr
         (_, cb) ->
             util.log 'Installing bootstrap dependencies'
-            exec 'npm install', cwd: 'components/boostrap', (err, stdout, stderr) ->
+            exec 'npm install', cwd: 'components/bootstrap', (err, stdout, stderr) ->
                 cb err, stderr
         (_, cb) ->
             util.log 'Updating bootstrap dependencies'
-            exec 'npm update', cwd: 'components/boostrap', (err, stdout, stderr) ->
+            exec 'npm update', cwd: 'components/bootstrap', (err, stdout, stderr) ->
                 cb err, stderr
         (_, cb) ->
             util.log 'Building bootstrap'
-            exec 'make bootstrap', cwd: 'components/boostrap', (err, stdout, stderr) ->
+            exec 'make bootstrap', cwd: 'components/bootstrap', (err, stdout, stderr) ->
                 cb err, stderr
     ], (err, result) ->
         if err?
             util.log err
-            util.log result
+            if result?
+                util.log result
