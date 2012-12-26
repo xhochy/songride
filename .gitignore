@@ -3,12 +3,3 @@
 /web/app.js
 /web/lib/*.js
 /web/components/
-/db/mongo-store/mongod.lock
-/db/mongo-store/songride*
-/db/mongo-store/local*
-/db/mongo-store/journal/
-/analyzer/target/
-/analyzer/project/project/
-/analyzer/project/target/
-/fetcher/config.rb
-/config.yml
