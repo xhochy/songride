@@ -59,7 +59,7 @@ app.get '/lastfm/:user', (req, res) ->
         (collection, cb) ->
             collection.find(username: req.params.user).toArray cb
         (user, cb) ->
-            if user.length == 1
+            if user.length > 0
                 # TODO: update user stats after X days 
                 cb null, user: user[0], queued: false
             else
