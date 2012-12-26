@@ -22,6 +22,10 @@ task 'update', 'install and update all dependencies', ->
             exec 'npm update', (err, stdout, stderr) ->
                 cb err, stderr
         (_, cb) ->
+            util.log 'Installing bower components'
+            exec 'bower install', (err, stdout, stderr) ->
+                cb err, stderr
+        (_, cb) ->
             util.log 'Updating bower components'
             exec 'bower update', (err, stdout, stderr) ->
                 cb err, stderr
