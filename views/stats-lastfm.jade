@@ -3,7 +3,9 @@ extends layout
 block content
     .page-header
         h1= title
-        script(type='text/javascript')
-            window.statsdata = !{JSON.stringify(countries)};
-        div#raphael-pie
-        div#raphael-world
+    script(type='text/javascript')
+        window.statsdata = !{JSON.stringify(countries)};
+    h3 Pie Chart
+    div#raphael-pie
+    h3 Heat Map (red = most, green = least heard)
+    div#raphael-world

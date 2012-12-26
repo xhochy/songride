@@ -10,8 +10,8 @@ window.drawLastFMPie = (obj) ->
         if worldmap.names[key]?
             code = worldmap.names[key]
         "%%.%% " + code
-    r = Raphael("raphael-pie", 500, 350)
-    pie = r.piechart 175, 175, 100, xs,
+    r = Raphael("raphael-pie", 500, 250)
+    pie = r.piechart 125, 125, 100, xs,
         legend: legend_ys
     mouseover = () ->
         this.sector.stop()
