@@ -1,0 +1,19 @@
+{
+    "echonest": {
+        "api_key": "<empty>"
+    },
+    "lastfm": {
+        "api_key": "<empty>",
+        "secret": "<empty>"
+    },
+    "mongodb": {
+        "host": "127.0.0.1",
+        "port": 27017,
+        "db": "songride"
+    },
+    "songride": {
+        "corrections": {
+            "United States": "US"
+        }
+    }
+}

@@ -22,3 +22,5 @@ and then all other dependcies are fetched and built using
 ```
 cake update
 ```
+
+Use `config.json.dist` as a template to build your custom `config.json`.
