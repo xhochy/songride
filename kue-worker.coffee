@@ -51,12 +51,8 @@ async.waterfall [
                         icb null, [location, parseInt(result[0].playcount)]
                     else
                         # Nothing cached so we need to ask the echonest.
-                        req = bucket: "artist_location"
-                        if !!item.mibd
-                            req.artist_id = "musicbrainz:artist:" + item.mbid
-                        else
-                            req.artist = item.name
-                        nest.song.search req, (err, res) ->
+                        req = bucket: "artist_location", name: item.name
+                        nest.artist.profile req, (err, res) ->
                             if err?
                                 icb err
                             else
@@ -65,10 +61,11 @@ async.waterfall [
                                 doc.mbid = item.mbid
                                 doc.name = item.name
                                 doc.updated_at = parseInt(new Date().getTime() / 1000)
-                                if res.status.code == 0 and res.songs.length > 0
-                                    doc.location = res.songs[0].artist_location.location
+                                if res.status.code == 0 and res.artist? and res.artist.artist_location?
+                                    doc.location = res.artist.artist_location.location
                                 else
                                     doc.location = 'Unknown'
+                                console.log(doc.location)
                                 # Store the result we got from the echonest
                                 # as we do not want to ask them contiously
                                 # the same thing.
