@@ -7,3 +7,18 @@ It made up of several components:
    data visualization
 2. Queue using Kue and Redis to fetch data from Last.fm and The Echonest
 3. MongoDB storage for all data except the queue.
+
+=== Setup ===
+
+Just install async, bower and coffeescript using
+
+```
+npm install -g coffee-script bower
+npm install async
+```
+
+and then all other dependcies are fetched and built using
+
+```
+cake update
+```

@@ -1,15 +1,6 @@
 async  = require 'async'
 {exec} = require 'child_process'
-muffin = require 'muffin'
 util   = require 'util'
-
-task 'build', 'compile all CoffeeScript source files', (options) ->
-    muffin.run
-        files: './**/*.coffee'
-        options: options
-        map:
-            'app.coffee'      : (matches) -> muffin.compileScript('app.coffee', 'app.js', options)
-            'lib/(.+).coffee' : (matches) -> muffin.compileScript(matches[0], matches[0].replace(/\.coffee$/, '.js'), options)
 
 task 'update', 'install and update all dependencies', ->
     async.waterfall [

@@ -1,1 +1,0 @@
-../components/g.pie-min/index.js

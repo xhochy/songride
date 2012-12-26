@@ -1,1 +1,0 @@
-../components/raphael-world/index.js
