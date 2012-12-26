@@ -1,4 +1,5 @@
 /web/node_modules/
+/web/config.json
 /web/app.js
 /web/lib/*.js
 /web/components/
