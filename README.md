@@ -8,7 +8,8 @@ It made up of several components:
 2. Queue using Kue and Redis to fetch data from Last.fm and The Echonest
 3. MongoDB storage for all data except the queue.
 
-=== Setup ===
+Setup
+-----
 
 Just install async, bower and coffeescript using
 
