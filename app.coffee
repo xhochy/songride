@@ -20,8 +20,8 @@ mongo.db = new mongodb.Db(config.mongodb.db, mongo.server,
 # Create job queue
 jobs = kue.createQueue()
 
+# Set up express.js
 app = express()
-
 app.configure ->
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
@@ -31,13 +31,11 @@ app.configure ->
   app.use express.static __dirname + '/public'
 
 app.configure 'development', ->
-  app.use expressError.express3(
-      contextLinesCount: 3
-      handleUncaughtException: true
-  )
-  #  app.use express.errorHandler
-  #  dumpExceptions: true
-  #  showStack: true
+    # Only show exceptions in development mode
+    app.use expressError.express3(
+        contextLinesCount: 3
+        handleUncaughtException: true
+    )
 
 app.configure 'production', ->
     app.use express.errorHandler()
@@ -51,6 +49,8 @@ app.get '/stats', (req, res) ->
         title: 'Statistics'
 
 app.get '/lastfm/:user', (req, res) ->
+    # As Last.fm does not care about username captialization
+    # we always use the lowercase variant as an identifier
     username = req.params.user.toLowerCase()
     async.waterfall [
         (cb) ->
@@ -64,6 +64,8 @@ app.get '/lastfm/:user', (req, res) ->
                 # TODO: update user stats after X days 
                 cb null, user: user[0], queued: false
             else
+                # no entry for this user was found, so add a job to the queue
+                # to generate statistics for him
                 jobs.create('lastfm-top50',
                     title: 'Calculate TOP 50 Last.fm statistics for ' + req.params.user
                     username: username
