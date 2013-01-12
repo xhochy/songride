@@ -1,0 +1,1 @@
+../components/g.bar-min/index.0
