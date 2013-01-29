@@ -101,7 +101,10 @@ async.waterfall [
                     cb null, data.topartists.artist
                 (artists, cb) ->
                     # Get the artists country
-                    async.mapSeries artists, lastfmArtist2Location, cb
+                    if artists?
+                        async.mapSeries artists, lastfmArtist2Location, cb
+                    else
+                        cb "No artists", null
                 (artists, cb) ->
                     job.progress(80, 100)
                     async.reduce artists, {}, reduceLocationCount, cb
