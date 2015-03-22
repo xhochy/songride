@@ -9,7 +9,7 @@
     "express-error": "0.0.7",
     "jade": "0.27.x",
     "kue": "~0.5.0",
-    "lastfm": "~0.8.3",
+    "lastfm": "~0.9.1",
     "markdown": "~0.4.0",
     "mongodb": "~1.2.7",
     "muffin": ">= 0.4.0",
