@@ -6,7 +6,7 @@
     "async": "^0.9.0",
     "echonest": "0.0.3",
     "express": "3.x",
-    "express-error": "0.0.3",
+    "express-error": "0.0.7",
     "jade": "0.27.x",
     "kue": "~0.5.0",
     "lastfm": "~0.8.3",
