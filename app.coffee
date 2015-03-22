@@ -41,7 +41,7 @@ app.configure 'production', ->
     app.use express.errorHandler()
 
 app.get '/', (req, res) ->
-    res.render 'index'
+    res.render 'index',
         title: 'Songride'
 
 app.get '/stats', (req, res) ->
